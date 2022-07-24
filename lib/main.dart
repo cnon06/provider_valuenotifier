@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_14/counter.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,8 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider<Counter>(
-          create: (context) => Counter(), child: const MyHomePage()),
+      home: ChangeNotifierProvider<ValueNotifier<int>>(
+          create: (context) => ValueNotifier<int>(0), child: const MyHomePage()),
     );
   }
 }
@@ -27,7 +26,7 @@ class  MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counter = Provider.of<Counter>(context, listen: false);
+    final counter = Provider.of<ValueNotifier<int>>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,13 +36,13 @@ class  MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Consumer<Counter>(
+            Consumer<ValueNotifier<int>>(
               builder: (_, value, __) => Text("Counter value: ${counter.value}",
               ),
               ),
             TextButton(
                 onPressed: () {
-                  counter.increment();
+                  counter.value++;
                 },
                 child: const Text("Increase")),
           ],
